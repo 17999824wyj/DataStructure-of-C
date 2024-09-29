@@ -3,95 +3,118 @@
 
 #include "experiment1.h"
 
-Status addListElem(const LinkedList toAdd) {
+Status addListElem(const LinkedList toAdd)
+{
 	int carrier = 0, index = 0;
-	getListLength(toAdd,&carrier);
+	getListLength(toAdd, &carrier);
 	ElemType data = 0;
-	printf("ÇëÊäÈëÒªÌí¼ÓµÄÊý¾Ý£º");
-	scanf("%d",&data);
-	if (findNum(toAdd,data,&index)) return ERROR;
-	return addListNode(toAdd,data,++carrier);
+	printf("è¯·è¾“å…¥è¦æ·»åŠ çš„æ•°æ®ï¼š");
+	scanf("%d", &data);
+	if (findNum(toAdd, data, &index))
+		return ERROR;
+	return addListNode(toAdd, data, ++carrier);
 }
 
-Status mergeAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet) {
-	ListNode* a = A->next;
-	ListNode* b = B->next;
+Status mergeAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet)
+{
+	ListNode *a = A->next;
+	ListNode *b = B->next;
 	int length = 0, index = 0;
-	while(a != NULL) {
-		if(findNum(B,a->data,&index))
-			if(!addListNode(ALLSet,a->data,++length))
+	while (a != NULL)
+	{
+		if (findNum(B, a->data, &index))
+			if (!addListNode(ALLSet, a->data, ++length))
 				return ERROR;
 		a = a->next;
 	}
 	return OK;
 }
 
-Status bingAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet) {
-	ListNode* a = A->next;
-	ListNode* b = B->next;
+Status bingAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet)
+{
+	ListNode *a = A->next;
+	ListNode *b = B->next;
 	int length = 0;
-	while(a != NULL) {
-		if(!addListNode(ALLSet,a->data,++length)) return ERROR;
+	while (a != NULL)
+	{
+		if (!addListNode(ALLSet, a->data, ++length))
+			return ERROR;
 		a = a->next;
 	}
-	while(b != NULL) {
+	while (b != NULL)
+	{
 		int index = 0;
-		if(findNum(ALLSet,b->data,&index)) {
+		if (findNum(ALLSet, b->data, &index))
+		{
 			b = b->next;
 			continue;
 		}
-		if(!addListNode(ALLSet,b->data,++length)) return ERROR;
+		if (!addListNode(ALLSet, b->data, ++length))
+			return ERROR;
 		b = b->next;
 	}
 	return OK;
 }
 
-Status chaAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet) {
+Status chaAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet)
+{
 	LinkedList jiao;
 	initLinkedList(&jiao);
-	if(!mergeAB(A,B,jiao)) return ERROR;
-	ListNode* temp = jiao->next;
-	while(temp != NULL) {
-		if(!delListNode(ALLSet,temp->data,1)) return ERROR;
+	if (!mergeAB(A, B, jiao))
+		return ERROR;
+	ListNode *temp = jiao->next;
+	while (temp != NULL)
+	{
+		if (!delListNode(ALLSet, temp->data, 1))
+			return ERROR;
 		temp = temp->next;
 	}
 	return destroyLinkedList(&jiao);
 }
 
-Status buAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet) {
+Status buAB(const LinkedList A, const LinkedList B, const LinkedList ALLSet)
+{
 	LinkedList temp;
-	ListNode* a = A->next;
-	ListNode* b = B->next;
+	ListNode *a = A->next;
+	ListNode *b = B->next;
 	initLinkedList(&temp);
-	copyLinkedList(ALLSet,temp);
-	printf("AµÄ²¹¼¯ÊÇ£º");
-	while(a != NULL) {
-		if(!delListNode(temp,a->data,1)) return ERROR;
+	copyLinkedList(ALLSet, temp);
+	printf("Açš„è¡¥é›†æ˜¯ï¼š");
+	while (a != NULL)
+	{
+		if (!delListNode(temp, a->data, 1))
+			return ERROR;
 		a = a->next;
 	}
-	if(!printLinkedList(temp)) printf("ERROE!\n");
+	if (!printLinkedList(temp))
+		printf("ERROE!\n");
 	puts("");
 	clearLinkedList(temp->next);
 	temp->next = NULL;
-	copyLinkedList(ALLSet,temp);
-	printf("BµÄ²¹¼¯ÊÇ£º");
-	while(b != NULL) {
-		if(!delListNode(temp,b->data,1)) return ERROR;
+	copyLinkedList(ALLSet, temp);
+	printf("Bçš„è¡¥é›†æ˜¯ï¼š");
+	while (b != NULL)
+	{
+		if (!delListNode(temp, b->data, 1))
+			return ERROR;
 		b = b->next;
 	}
-	if(!printLinkedList(temp)) printf("ERROE!\n");
+	if (!printLinkedList(temp))
+		printf("ERROE!\n");
 	puts("");
 	return destroyLinkedList(&temp);
 }
 
-Status delSet(const LinkedList toDel) {
+Status delSet(const LinkedList toDel)
+{
 	printLinkedList(toDel);
-	printf("\nÇëÊäÈëÒªÉ¾³ýµÄÊý¾ÝÏÂ±ê£¬ÈôÊý¾Ý²»´æÔÚ£¬Ôò½«·µ»Ø\n");
-	printf("Àý£º¼¯ºÏÎª{2£¬3}£¬ÊäÈë1ÔòÉ¾³ý2£¬ÊäÈë2ÔòÉ¾³ý3£¬ÊäÈë-1ÔòÍË³ö\n");
+	printf("\nè¯·è¾“å…¥è¦åˆ é™¤çš„æ•°æ®ä¸‹æ ‡ï¼Œè‹¥æ•°æ®ä¸å­˜åœ¨ï¼Œåˆ™å°†è¿”å›ž\n");
+	printf("ä¾‹ï¼šé›†åˆä¸º{2ï¼Œ3}ï¼Œè¾“å…¥1åˆ™åˆ é™¤2ï¼Œè¾“å…¥2åˆ™åˆ é™¤3ï¼Œè¾“å…¥-1åˆ™é€€å‡º\n");
 	int choice;
 	printf("index >> ");
-	scanf("%d",&choice);
-	if(choice == -1) return OK;
+	scanf("%d", &choice);
+	if (choice == -1)
+		return OK;
 	return delListNode(toDel, choice, 0);
 }
 
