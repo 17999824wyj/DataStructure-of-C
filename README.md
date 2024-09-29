@@ -1,0 +1,3 @@
+# Data Structre of C
+
+PS: NEU-experiment of data structure...
